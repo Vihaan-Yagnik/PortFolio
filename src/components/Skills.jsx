@@ -1,10 +1,9 @@
 // src/components/Skills.jsx
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'; 
+import { motion, AnimatePresence } from 'framer-motion'; 
 import { FaReact, FaNodeJs, FaDocker, FaPython, FaAws } from 'react-icons/fa';
 import { SiNextdotjs, SiTypescript, SiVite, SiTailwindcss, SiExpress, SiMongodb, SiPostgresql, SiKubernetes } from 'react-icons/si';
 
-// ... (servicesData remains the same)
 const servicesData = [
   {
     id: '01',
@@ -41,48 +40,35 @@ const servicesData = [
   },
 ];
 
-
 const Skills = ({id}) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start end', 'end start'],
-  });
-
-  // --- MODIFICATION START ---
-  // Create transforms for the title (unchanged)
-  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
-
-  // NEW: Create transforms for scale and opacity for the "pop up" effect
-  const cardsScale = useTransform(scrollYProgress, [0.1, 0.6], [0.8, 1]); // Starts at 80% size, ends at 100%
-  const cardsOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]); // Fades in
-  // --- MODIFICATION END ---
-
+  
+  // Note: The main parallax logic for the whole container has been removed from here.
 
   return (
-    <section id={id} ref={targetRef} className="py-20 bg-base-100 overflow-hidden">
+    <section id={id} className="py-20 bg-base-100 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-        <motion.h2 
-          style={{ y: titleY }}
-          className="text-4xl font-extrabold text-center text-base-content mb-12"
-        >
+        {/* You can optionally add the parallax back to just the title */}
+        <h2 className="text-4xl font-extrabold text-center text-base-content mb-12">
           What I Can Help You With
-        </motion.h2>
+        </h2>
         
-        {/* MODIFIED: Apply the new scale and opacity styles */}
-        <motion.div
-          style={{ scale: cardsScale, opacity: cardsOpacity }} 
+        {/* The grid container is now a regular div */}
+        <div
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {/* ... (the rest of the component remains the same) */}
           {servicesData.map((service, index) => (
-            <div
+            // --- CHANGE: motion.div is now here, on each individual card ---
+            <motion.div
               key={service.id}
               className="p-8 border border-base-content/20 rounded-2xl cursor-pointer bg-base-200/50 transition-colors duration-300 hover:bg-base-300"
               onMouseEnter={() => setHoveredIndex(index)}
+              // Animation props are now here for each card
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ amount: 0.3 }} // Animation triggers when 30% of the card is visible
+              transition={{ duration: 0.5 }}
             >
               <div className="flex items-center gap-4">
                 <span className="text-3xl font-bold text-primary">{service.id}</span>
@@ -101,9 +87,7 @@ const Skills = ({id}) => {
                       transition={{ duration: 0.3 }}
                     >
                       {service.technologies.map((tech) => (
-                        <div key={tech.name} title={tech.name}>
-                          {tech.icon}
-                        </div>
+                        <div key={tech.name} title={tech.name}>{tech.icon}</div>
                       ))}
                     </motion.div>
                   ) : (
@@ -120,9 +104,9 @@ const Skills = ({id}) => {
                   )}
                 </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div >
       </div>
     </section>
   );
