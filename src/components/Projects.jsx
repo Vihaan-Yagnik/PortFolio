@@ -36,8 +36,8 @@ const projectsData = [
       "A personal portfolio website to showcase my skills and projects, featuring interactive animations and a clean design.",
     tags: ["React", "Vite", "DaisyUI", "Motion.dev", "Matter.js"],
     links: {
-      live: "#",
-      github: "#",
+      live: "https://vihaan-yagnik-portfolio.netlify.app/",
+      github: "https://github.com/Vihaan-Yagnik/PortFolio",
     },
   },
 ];
