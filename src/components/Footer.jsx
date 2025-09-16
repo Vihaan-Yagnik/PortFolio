@@ -13,7 +13,7 @@ const Footer = ({id}) => {
         {/* Social Links */}
         <div className="grid grid-flow-col gap-6">
           <a
-            href="#"
+            href="https://github.com/Vihaan-Yagnik"
             target="_blank"
             rel="noopener noreferrer"
             className="link link-hover transition-transform duration-300 hover:scale-110"
@@ -22,7 +22,7 @@ const Footer = ({id}) => {
             <FaGithub size={28} />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/vihaan-yagnik-7aa907269/"
             target="_blank"
             rel="noopener noreferrer"
             className="link link-hover transition-transform duration-300 hover:scale-110"
@@ -31,7 +31,7 @@ const Footer = ({id}) => {
             <FaLinkedin size={28} />
           </a>
           <a
-            href="#"
+            href="https://x.com/VihaanYagnik"
             target="_blank"
             rel="noopener noreferrer"
             className="link link-hover transition-transform duration-300 hover:scale-110"
